@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đào tạo ISO/IEC 27001:2022 | Viettel Networks</title>
+    
+    <!-- Fallback Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700;800&family=DM+Sans:wght@300;400;500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --color-red: #E30613;
+            --color-red-dark: #B30000;
+            --color-red-light: #FF2D2D;
+            --color-black: #0A0A0A;
+            --color-dark: #1A1A1A;
+            --color-gray-1: #4A4A4A;
+            --color-gray-2: #7F7F7F;
+            --color-gray-3: #CCCCCC;
+            --color-gray-4: #F5F5F5;
+            --color-white: #FFFFFF;
+            
+            --font-display: 'Barlow', sans-serif; /* Fallback for FS Magistral */
+            --font-body: 'DM Sans', sans-serif; /* Fallback for PF BeauSans Pro */
+            --font-mono: 'Roboto', sans-serif;
+            
+            --spacing-unit: 8px;
+            --container-max-width: 1200px;
+            --transition-standard: 200ms ease-out;
+            --transition-slow: 300ms ease-out;
+        }
+
+        /* Reset & Base Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            color: var(--color-gray-1);
+            background-color: var(--color-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+        
+        h1, h2, h3, h4, .font-display { font-family: var(--font-display); }
+        h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 800; line-height: 1.2; }
+        h2 { font-size: clamp(28px, 4vw, 32px); font-weight: 700; margin-bottom: 16px; }
+        h3 { font-size: 24px; font-weight: 500; }
+        p { margin-bottom: 16px; }
+        a { text-decoration: none; color: inherit; transition: color var(--transition-standard); }
+        ul { list-style: none; }
+        img, svg { max-width: 100%; height: auto; }
+
+        /* Typography Utilities */
+        .text-red { color: var(--color-red); }
+        .text-white { color: var(--color-white); }
+        .text-gray-1 { color: var(--color-gray-1); }
+        .text-gray-2 { color: var(--color-gray-2); }
+        .text-center { text-align: center; }
+        .uppercase { text-transform: uppercase; }
+        .font-bold { font-weight: 700; }
+        .font-medium { font-weight: 500; }
+        .small-body { font-size: 14px; font-weight: 300; }
+        .caption { font-family: var(--font-mono); font-size: 12px; font-weight: 500; }
+
+        /* Layout Utilities */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .section-padding { padding: 80px 0; }
+        @media (min-width: 768px) { .section-padding { padding: 96px 0; } }
+        
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-16 { gap: 16px; }
+        .gap-24 { gap: 24px; }
+        .gap-48 { gap: 48px; }
+
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: 1fr; }
+        @media (min-width: 768px) {
+            .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+            .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all var(--transition-standard);
+            border: none;
+            outline: none;
+        }
+        .btn:focus-visible { outline: 2px solid var(--color-red-light); outline-offset: 2px; }
+        .btn-primary { background-color: var(--color-red); color: var(--color-white); }
+        .btn-primary:hover { background-color: var(--color-red-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(227,6,19,0.3); }
+        .btn-outline { border: 2px solid var(--color-red); color: var(--color-red); background: transparent; }
+        .btn-outline:hover { background-color: rgba(227,6,19,0.05); }
+        .btn-large { padding: 16px 32px; font-size: 18px; }
+
+        /* Section 1: Navbar */
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--color-white);
+            border-bottom: 1px solid var(--color-gray-4);
+            transition: box-shadow var(--transition-standard);
+        }
+        #navbar.scrolled {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-bottom: none;
+        }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+        .brand-logo { font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--color-red); letter-spacing: -0.5px; }
+        .brand-logo span { color: var(--color-black); }
+        
+        .nav-menu { display: flex; gap: 32px; align-items: center; }
+        .nav-link { font-family: var(--font-display); font-weight: 500; font-size: 16px; color: var(--color-gray-1); }
+        .nav-link:hover { color: var(--color-red); }
+        
+        .contact-info-small { font-family: var(--font-mono); font-size: 13px; color: var(--color-gray-2); display: flex; gap: 16px; margin-right: 24px; }
+        
+        .mobile-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--color-black); }
+        
+        @media (max-width: 992px) {
+            .nav-menu, .contact-info-small, .nav-cta { display: none; }
+            .mobile-toggle { display: block; }
+            #navbar.menu-open .nav-menu {
+                display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0;
+                background: var(--color-white); padding: 24px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); gap: 16px;
+            }
+            #navbar.menu-open .nav-cta { display: flex; margin-top: 16px; width: 100%; justify-content: center; }
+        }
+
+        /* Section 2: Hero */
+        #hero {
+            background-color: var(--color-black);
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 60%, #2A0A0A 100%);
+            color: var(--color-white);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-eyebrow { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--color-red); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; display: inline-block; }
+        .hero-subheadline { font-size: 18px; color: var(--color-gray-3); max-width: 600px; margin-bottom: 40px; }
+        .badges { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 48px; }
+        .badge { background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; padding: 6px 16px; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        
+        .hero-visual { width: 100%; max-width: 500px; margin: 0 auto; position: relative; }
+        .hero-visual svg { width: 100%; height: auto; filter: drop-shadow(0 0 30px rgba(227,6,19,0.2)); animation: float 6s ease-in-out infinite; }
+
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+
+        /* Section 3: Trust Bar */
+        #trust-bar { background-color: var(--color-gray-4); border-top: 1px solid var(--color-gray-3); border-bottom: 1px solid var(--color-gray-3); padding: 48px 0; }
+        .trust-grid { display: grid; grid-template-columns: 1fr; gap: 32px; text-align: center; }
+        @media (min-width: 768px) {
+            .trust-grid { grid-template-columns: repeat(3, 1fr); }
+            .trust-item:not(:last-child) { border-right: 1px solid var(--color-gray-3); }
+        }
+        .trust-number { font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--color-red); margin: 8px 0 4px; }
+        .trust-label { font-size: 14px; color: var(--color-gray-1); font-weight: 500; }
+        .trust-note { text-align: center; margin-top: 32px; font-style: italic; color: var(--color-gray-2); font-size: 14px; }
+
+        /* Section 4: Benefits */
+        #quyen-loi { background-color: var(--color-gray-4); }
+        .benefit-card {
+            background: var(--color-white); border: 1px solid var(--color-gray-3); border-radius: 8px; padding: 32px;
+            transition: all var(--transition-standard); height: 100%;
+        }
+        .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(227,6,19,0.12); border-color: transparent; }
+        .benefit-icon { width: 48px; height: 48px; color: var(--color-red); margin-bottom: 24px; }
+        .benefit-card h3 { margin-bottom: 12px; color: var(--color-black); }
+
+        /* Section 5 & 8: Accordion (Curriculum & FAQ) */
+        .accordion-item { border-bottom: 1px solid var(--color-gray-3); margin-bottom: 8px; }
+        .accordion-header {
+            width: 100%; text-align: left; background: var(--color-black); color: var(--color-white); border: none;
+            padding: 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+            font-family: var(--font-display); font-size: 18px; font-weight: 700; border-left: 4px solid transparent;
+            transition: background var(--transition-standard);
+        }
+        #faq .accordion-header { background: var(--color-white); color: var(--color-black); border: 1px solid var(--color-gray-3); border-left: 4px solid transparent; }
+        
+        .accordion-header:hover { background: var(--color-dark); }
+        #faq .accordion-header:hover { background: var(--color-gray-4); }
+        
+        .accordion-header.active { border-left-color: var(--color-red); }
+        .accordion-icon { transition: transform var(--transition-standard); }
+        .accordion-header.active .accordion-icon { transform: rotate(180deg); }
+        
+        .accordion-content {
+            max-height: 0; overflow: hidden; transition: max-height var(--transition-slow); background: var(--color-white);
+        }
+        #faq .accordion-content { border-left: 1px solid var(--color-gray-3); border-right: 1px solid var(--color-gray-3); }
+        #faq .accordion-item.active .accordion-content { border-bottom: 1px solid var(--color-gray-3); }
+        
+        .accordion-body { padding: 24px; color: var(--color-gray-1); }
+        .accordion-body ul { list-style-type: disc; margin-left: 20px; }
+        .accordion-body li { margin-bottom: 8px; }
+
+        /* Section 6: How to Join (Timeline) */
+        #cach-thuc { background-color: var(--color-black); color: var(--color-white); }
+        .timeline { display: flex; flex-direction: column; gap: 40px; position: relative; margin-top: 48px; }
+        .timeline::before { content: ''; position: absolute; left: 28px; top: 0; bottom: 0; width: 2px; background: var(--color-gray-1); }
+        
+        @media (min-width: 992px) {
+            .timeline { flex-direction: row; gap: 24px; }
+            .timeline::before { left: 0; top: 28px; right: 0; bottom: auto; height: 2px; width: 100%; }
+        }
+        
+        .timeline-item { display: flex; flex-direction: row; gap: 24px; position: relative; z-index: 1; flex: 1; }
+        @media (min-width: 992px) {
+            .timeline-item { flex-direction: column; gap: 16px; }
+        }
+        
+        .timeline-number {
+            width: 56px; height: 56px; border-radius: 50%; background: var(--color-red); color: var(--color-white);
+            display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 24px; font-weight: 700;
+            flex-shrink: 0; box-shadow: 0 0 0 8px var(--color-black);
+        }
+        .timeline-content h3 { color: var(--color-white); margin-bottom: 8px; font-size: 20px; }
+        .timeline-content p { color: var(--color-gray-3); font-size: 15px; }
+        .timeline-badge { display: inline-block; background: rgba(227,6,19,0.2); color: var(--color-red-light); padding: 4px 12px; border-radius: 4px; font-size: 13px; font-weight: 700; margin-top: 8px; }
+
+        /* Section 7: Instructor */
+        #giang-vien { background-color: var(--color-white); }
+        .instructor-card {
+            background: var(--color-gray-4); border-radius: 12px; padding: 40px; max-width: 800px; margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; gap: 32px; text-align: center;
+        }
+        @media (min-width: 768px) {
+            .instructor-card { flex-direction: row; text-align: left; padding: 48px; }
+        }
+        .instructor-avatar {
+            width: 120px; height: 120px; border-radius: 50%; background: var(--color-red);
+            display: flex; align-items: center; justify-content: center; color: var(--color-white); flex-shrink: 0;
+            box-shadow: 0 8px 24px rgba(227,6,19,0.2);
+        }
+        .instructor-info h3 { color: var(--color-black); font-size: 28px; margin-bottom: 4px; }
+        .instructor-unit { color: var(--color-red); font-weight: 500; font-family: var(--font-display); margin-bottom: 16px; }
+
+        /* Section 9: Form / Final CTA */
+        #dang-ky { background-color: var(--color-black); color: var(--color-white); }
+        .registration-layout { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
+        @media (min-width: 992px) { .registration-layout { grid-template-columns: 1fr 1fr; } }
+        
+        .urgency-text { color: var(--color-red-light); font-weight: 700; display: flex; align-items: center; gap: 8px; background: rgba(227,6,19,0.1); padding: 12px 16px; border-radius: 4px; border-left: 4px solid var(--color-red); margin-top: 24px; }
+        
+        .form-card { background: var(--color-dark); border: 1px solid var(--color-gray-1); border-radius: 8px; padding: 40px; position: relative; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; color: var(--color-gray-3); font-size: 14px; font-weight: 500; }
+        .form-control {
+            width: 100%; padding: 14px 16px; background: #2A2A2A; border: 1px solid var(--color-gray-1); border-radius: 4px;
+            color: var(--color-white); font-family: var(--font-body); font-size: 16px; transition: border-color var(--transition-standard);
+        }
+        .form-control:focus { outline: none; border-color: var(--color-red); background: #333; }
+        .form-control::placeholder { color: var(--color-gray-2); }
+        select.form-control { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23CCCCCC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 16px center; background-size: 16px; }
+        
+        .btn-submit { width: 100%; font-size: 18px; padding: 16px; margin-top: 16px; animation: pulse 2s infinite; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(227,6,19,0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(227,6,19,0); }
+            100% { box-shadow: 0 0 0 0 rgba(227,6,19,0); }
+        }
+
+        .success-message {
+            display: none; text-align: center; padding: 40px 20px; background: rgba(0, 200, 83, 0.1);
+            border: 1px solid #00C853; border-radius: 8px;
+        }
+        .success-icon { width: 64px; height: 64px; color: #00C853; margin: 0 auto 16px; }
+
+        /* Section 10: Footer */
+        #footer { background: var(--color-black); border-top: 1px solid var(--color-gray-1); padding: 64px 0 24px; color: var(--color-gray-2); font-size: 14px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 48px; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+        
+        .footer-logo { font-family: var(--font-display); font-size: 20px; font-weight: 800; color: var(--color-white); margin-bottom: 16px; display: inline-block;}
+        .footer-heading { color: var(--color-white); font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a:hover { color: var(--color-white); }
+        .footer-contact li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+        
+        .footer-bottom { border-top: 1px solid var(--color-gray-1); padding-top: 24px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+        .disclaimer { font-size: 12px; color: var(--color-gray-1); }
+
+        /* Animations */
+        .animate-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        
+    </style>
+</head>
+<body>
+
+    <!-- SECTION 1: NAVIGATION -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="brand-logo">Viettel<span>Networks</span></a>
+            
+            <div class="contact-info-small">
+                <span>📞 0989 208 017</span>
+                <span>✉ minhmn@viettel.com.vn</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="#quyen-loi" class="nav-link">Quyền lợi</a></li>
+                <li><a href="#noi-dung" class="nav-link">Nội dung</a></li>
+                <li><a href="#cach-thuc" class="nav-link">Cách thức</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+            </ul>
+
+            <a href="#dang-ky" class="btn btn-primary nav-cta">Đăng ký tham gia</a>
+
+            <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SECTION 2: HERO -->
+    <header id="hero" class="section-padding">
+        <div class="container grid grid-cols-2 items-center gap-48">
+            <div class="hero-content animate-on-scroll is-visible">
+                <span class="hero-eyebrow">Chương trình đào tạo nội bộ</span>
+                <h1 class="text-white">Đào tạo ISO/IEC 27001:2022<br><span class="text-red">Nâng cao nhận thức ATTT</span></h1>
+                <p class="hero-subheadline mt-4">Khóa đào tạo giúp CBCNV hiểu rõ hệ thống quản lý an toàn thông tin, các yêu cầu cốt lõi và cách áp dụng thực tế trong công việc tại VTNet.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#dang-ky" class="btn btn-primary btn-large">Đăng ký trước 25/5/2026</a>
+                    <a href="#noi-dung" class="btn btn-outline btn-large">Xem nội dung đào tạo</a>
+                </div>
+
+                <div class="badges">
+                    <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Blended Learning</span>
+                    <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Online + Offline</span>
+                    <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg> Chứng nhận hoàn thành</span>
+                </div>
+            </div>
+
+            <div class="hero-visual animate-on-scroll is-visible delay-200">
+                <!-- SVG Tech/Shield Illustration -->
+                <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Circuit Background -->
+                    <path d="M50 200 H120 V150 H180" stroke="#4A4A4A" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="180" cy="150" r="4" fill="#E30613"/>
+                    <path d="M350 250 H280 V300 H220" stroke="#4A4A4A" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="220" cy="300" r="4" fill="#E30613"/>
+                    <path d="M200 50 V100 H250" stroke="#4A4A4A" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="250" cy="100" r="4" fill="#E30613"/>
+                    <!-- Shield Core -->
+                    <path d="M200 60 L100 100 V180 C100 260 140 310 200 340 C260 310 300 260 300 180 V100 L200 60 Z" fill="#1A1A1A" stroke="#E30613" stroke-width="4"/>
+                    <path d="M200 60 L100 100 V180 C100 260 140 310 200 340 C260 310 300 260 300 180 V100 L200 60 Z" fill="url(#paint0_linear)"/>
+                    <!-- Inner Elements -->
+                    <circle cx="200" cy="180" r="40" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="8 4"/>
+                    <path d="M185 180 L195 190 L220 165" stroke="#E30613" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="paint0_linear" x1="200" y1="60" x2="200" y2="340" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#E30613" stop-opacity="0.2"/>
+                            <stop offset="1" stop-color="#E30613" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 3: TRUST BAR -->
+    <section id="trust-bar">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item animate-on-scroll">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <div class="trust-number">8 giờ</div>
+                    <div class="trust-label">Thời lượng đào tạo</div>
+                </div>
+                <div class="trust-item animate-on-scroll delay-100">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <div class="trust-number">93</div>
+                    <div class="trust-label">Kiểm soát bảo mật theo phụ lục A</div>
+                </div>
+                <div class="trust-item animate-on-scroll delay-200">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto;"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    <div class="trust-number">4–10</div>
+                    <div class="trust-label">Điều khoản yêu cầu ISO cốt lõi</div>
+                </div>
+            </div>
+            <p class="trust-note animate-on-scroll delay-300">Đào tạo theo tiêu chuẩn quốc tế ISO/IEC 27001:2022</p>
+        </div>
+    </section>
+
+    <!-- SECTION 4: BENEFITS -->
+    <section id="quyen-loi" class="section-padding">
+        <div class="container">
+            <div class="text-center mb-12 animate-on-scroll" style="margin-bottom: 48px;">
+                <h2 class="text-black">Tại sao nên tham gia?</h2>
+                <p class="text-gray-1">5 lợi ích thiết thực từ chương trình đào tạo nội bộ VTNet</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-24">
+                <div class="benefit-card animate-on-scroll">
+                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+                    <h3>Nâng cao nhận thức</h3>
+                    <p>Xây dựng ý thức bảo mật thông tin vững chắc cho toàn bộ CBCNV trong quá trình tác nghiệp hàng ngày.</p>
+                </div>
+                
+                <div class="benefit-card animate-on-scroll delay-100">
+                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    <h3>Nắm vững điều khoản ISO</h3>
+                    <p>Hiểu rõ các điều khoản quan trọng của bộ tiêu chuẩn ISO/IEC 27001:2022 từ điều 4 đến điều 10.</p>
+                </div>
+
+                <div class="benefit-card animate-on-scroll delay-200">
+                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <h3>Áp dụng thực tế</h3>
+                    <p>Chuyển hoá lý thuyết bảo mật thành hành động cụ thể trong quy trình công việc hàng ngày tại đơn vị.</p>
+                </div>
+
+                <!-- Centered bottom row -->
+                <div class="benefit-card animate-on-scroll" style="grid-column: 1 / -1; max-width: 400px; justify-self: center; width: 100%; margin: 0 auto; @media(min-width: 768px){ grid-column: span 1; } @media(min-width: 1200px){ grid-column: 2; margin-left: -50%; }">
+                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+                    <h3>Kỹ năng đánh giá nội bộ</h3>
+                    <p>Được hướng dẫn chi tiết cách thực hiện vai trò đánh giá viên nội bộ theo tiêu chuẩn ISO.</p>
+                </div>
+
+                <div class="benefit-card animate-on-scroll delay-100" style="grid-column: 1 / -1; max-width: 400px; justify-self: center; width: 100%; margin: 0 auto; @media(min-width: 768px){ grid-column: span 1; } @media(min-width: 1200px){ grid-column: 3; margin-left: -50%; }">
+                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                    <h3>Chứng nhận hoàn thành</h3>
+                    <p>Nhận chứng nhận nội bộ sau khi tham gia đầy đủ khóa học và đạt yêu cầu bài thi cuối khóa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CURRICULUM -->
+    <section id="noi-dung" class="section-padding">
+        <div class="container" style="max-width: 800px;">
+            <div class="text-center mb-12 animate-on-scroll" style="margin-bottom: 48px;">
+                <h2 class="text-black">Nội dung chương trình đào tạo</h2>
+                <p>Chi tiết 4 học phần chính trong khóa học ISO/IEC 27001:2022</p>
+            </div>
+
+            <div class="accordion-group animate-on-scroll">
+                <!-- Part 1 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Phần 1: Tổng quan ISO/IEC 27001:2022</span>
+                        <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Vai trò của Hệ thống Quản lý An toàn Thông tin (ISMS).</li>
+                                <li>Lý do doanh nghiệp và VTNet cần áp dụng ISO 27001.</li>
+                                <li>Các khái niệm nền tảng về an toàn thông tin (Tính bảo mật, Tính toàn vẹn, Tính sẵn sàng).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part 2 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Phần 2: Các điều khoản yêu cầu 4–10</span>
+                        <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <ul>
+                                <li><strong>Điều 4:</strong> Bối cảnh tổ chức.</li>
+                                <li><strong>Điều 5:</strong> Lãnh đạo.</li>
+                                <li><strong>Điều 6:</strong> Hoạch định và đánh giá rủi ro.</li>
+                                <li><strong>Điều 7:</strong> Hỗ trợ (Nguồn lực, năng lực, nhận thức).</li>
+                                <li><strong>Điều 8:</strong> Vận hành.</li>
+                                <li><strong>Điều 9:</strong> Đánh giá kết quả hoạt động.</li>
+                                <li><strong>Điều 10:</strong> Cải tiến liên tục.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part 3 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Phần 3: Phụ lục A – 93 kiểm soát bảo mật</span>
+                        <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Tổng quan 4 nhóm kiểm soát mới trong phiên bản 2022 (Tổ chức, Con người, Vật lý, Công nghệ).</li>
+                                <li>Phân tích các kiểm soát quan trọng áp dụng trong thực tế hoạt động mạng lưới của VTNet.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part 4 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Phần 4: Đánh giá viên nội bộ</span>
+                        <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Quy trình thực hiện đánh giá nội bộ theo chuẩn ISO 19011.</li>
+                                <li>Vai trò, trách nhiệm và đạo đức của đánh giá viên.</li>
+                                <li>Kỹ năng lập kế hoạch đánh giá, phỏng vấn và lập báo cáo sự không phù hợp (NC).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: HOW TO JOIN -->
+    <section id="cach-thuc" class="section-padding">
+        <div class="container">
+            <div class="text-center mb-12 animate-on-scroll">
+                <h2 class="text-white">Cách thức tham gia</h2>
+                <p class="text-gray-2">Quy trình 5 bước để hoàn thành chứng nhận ISO/IEC 27001:2022</p>
+            </div>
+
+            <div class="timeline animate-on-scroll delay-100">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h3>Nghiên cứu tài liệu</h3>
+                        <p>Truy cập LXP nội bộ và nghiên cứu tài liệu ISO/IEC 27001 được cung cấp trước khóa học.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h3>Chuẩn bị thực tế</h3>
+                        <p>Chuẩn bị các ví dụ thực tế liên quan đến an toàn thông tin tại đơn vị của bạn để thảo luận.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-number" style="background: var(--color-red-dark); box-shadow: 0 0 0 8px #1A1A1A;">3</div>
+                    <div class="timeline-content">
+                        <h3 class="text-red-light">Đăng ký hệ thống</h3>
+                        <p>Điền form thông tin cá nhân và đơn vị công tác dưới đây.</p>
+                        <span class="timeline-badge">Deadline: 25/5/2026</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h3>Tham gia khóa học</h3>
+                        <p>Tham gia trực tiếp hoặc qua hệ thống Zoom vào ngày Thứ Sáu 29/5/2026.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-number">5</div>
+                    <div class="timeline-content">
+                        <h3>Hoàn thành bài thi</h3>
+                        <p>Làm bài kiểm tra cuối khóa trên hệ thống đào tạo nội bộ.</p>
+                        <span class="timeline-badge">Điều kiện: Đạt 7/10 điểm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: INSTRUCTOR -->
+    <section id="giang-vien" class="section-padding">
+        <div class="container">
+            <h2 class="text-center text-black mb-12 animate-on-scroll" style="margin-bottom: 48px;">Giảng viên chương trình</h2>
+            
+            <div class="instructor-card animate-on-scroll delay-100">
+                <div class="instructor-avatar">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="instructor-info">
+                    <h3>Đ/c Văn Thị Ngân</h3>
+                    <div class="instructor-unit">Phòng Công nghệ Thông tin – Tổng Công ty Mạng lưới Viettel</div>
+                    <p class="text-gray-1">Chuyên gia phụ trách hướng dẫn nội dung đào tạo ISO/IEC 27001:2022. Có nhiều năm kinh nghiệm trong việc xây dựng, vận hành và đánh giá hệ thống quản lý an toàn thông tin nội bộ tại VTNet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: FAQ -->
+    <section id="faq" class="section-padding" style="background-color: var(--color-gray-4);">
+        <div class="container" style="max-width: 800px;">
+            <div class="text-center mb-12 animate-on-scroll" style="margin-bottom: 48px;">
+                <h2 class="text-black">Câu hỏi thường gặp</h2>
+                <p>Giải đáp thắc mắc về công tác tổ chức đào tạo</p>
+            </div>
+
+            <div class="accordion-group animate-on-scroll">
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Khóa học diễn ra khi nào?</span>
+                        <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">Khóa học được tổ chức vào <strong>Thứ Sáu, ngày 29/5/2026</strong>. Thời gian chi tiết sẽ được gửi qua email xác nhận.</div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Hình thức học là gì?</span>
+                        <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">Chương trình áp dụng mô hình <strong>Blended Learning</strong> — kết hợp tự học tài liệu online trên hệ thống LXP trước ngày đào tạo, và học tập trung (trực tiếp tại hội trường hoặc trực tuyến qua Zoom).</div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Có yêu cầu trước khi tham gia không?</span>
+                        <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">Có. Học viên bắt buộc phải tự nghiên cứu trước tài liệu tiêu chuẩn ISO/IEC 27001 trên hệ thống LXP nội bộ để đảm bảo chất lượng buổi học thảo luận.</div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Điều kiện để hoàn thành khóa học?</span>
+                        <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">Học viên cần tham gia đầy đủ thời lượng buổi học VÀ đạt điểm bài thi trắc nghiệm cuối khóa từ <strong>7/10 điểm trở lên</strong>.</div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>Học viên nhận được gì sau khóa học?</span>
+                        <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-body">Học viên đạt yêu cầu sẽ nhận được chứng nhận hoàn thành chương trình đào tạo nội bộ và được cung cấp toàn bộ slide tài liệu tham khảo để áp dụng vào công việc.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: REGISTRATION FORM -->
+    <section id="dang-ky" class="section-padding">
+        <div class="container registration-layout">
+            <div class="form-content animate-on-scroll">
+                <h2 class="text-white" style="font-size: clamp(32px, 4vw, 40px);">Đăng ký tham gia chương trình ISO/IEC 27001:2022</h2>
+                <p class="text-gray-3 mt-4" style="font-size: 18px;">Hoàn tất form thông tin dưới đây để đăng ký tham gia chương trình đào tạo nội bộ. Ban tổ chức sẽ gửi email xác nhận và link Zoom/địa điểm cụ thể sau khi chốt danh sách.</p>
+                
+                <ul class="mt-8" style="margin-top: 32px; list-style: none; padding:0;">
+                    <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-red)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Học trực tiếp tại Tòa nhà Viettel hoặc Online qua Zoom
+                    </li>
+                    <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-red)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Thời gian đào tạo: 29/05/2026
+                    </li>
+                </ul>
+
+                <div class="urgency-text">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <span>Hạn chót đăng ký: 25/5/2026. Số lượng học viên có thể giới hạn theo lớp.</span>
+                </div>
+            </div>
+
+            <div class="form-card animate-on-scroll delay-200">
+                <form id="training-form">
+                    <div class="form-group">
+                        <label class="form-label" for="fullname">Họ và tên *</label>
+                        <input type="text" id="fullname" class="form-control" placeholder="Nhập họ và tên đầy đủ" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="department">Đơn vị / Phòng ban *</label>
+                        <input type="text" id="department" class="form-control" placeholder="VD: Phòng Công nghệ Thông tin" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Số điện thoại nội bộ *</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="VD: 0989xxxxxx" required pattern="[0-9]{10,11}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Viettel *</label>
+                        <input type="email" id="email" class="form-control" placeholder="ten@viettel.com.vn" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="attendance">Hình thức tham gia *</label>
+                        <select id="attendance" class="form-control" required>
+                            <option value="" disabled selected>Chọn hình thức...</option>
+                            <option value="offline">Trực tiếp tại Hội trường</option>
+                            <option value="online">Online qua hệ thống Zoom</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-submit">Đăng ký tham gia ngay</button>
+                </form>
+
+                <div id="form-success" class="success-message">
+                    <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <h3 class="text-white mb-2" style="font-family: var(--font-display);">Đăng ký thành công!</h3>
+                    <p class="text-gray-3">Thông tin của bạn đã được ghi nhận. Chúng tôi sẽ liên hệ xác nhận chi tiết qua email trong thời gian sớm nhất.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: FOOTER -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">Viettel<span>Networks</span></div>
+                    <p class="mt-4" style="max-width: 300px;">Chương trình đào tạo nâng cao nhận thức và năng lực quản lý an toàn thông tin theo tiêu chuẩn quốc tế ISO/IEC 27001:2022 dành cho CBNV.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Liên kết nhanh</h4>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Giới thiệu chương trình</a></li>
+                        <li><a href="#noi-dung">Nội dung đào tạo</a></li>
+                        <li><a href="#cach-thuc">Hướng dẫn tham gia</a></li>
+                        <li><a href="#faq">Câu hỏi thường gặp</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Thông tin liên hệ</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0; margin-top:3px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <span>Mai Ngọc Minh<br><span style="font-size: 13px; color: var(--color-gray-1);">Phòng Nhân sự – TCT Mạng lưới Viettel</span></span>
+                        </li>
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            0989 208 017
+                        </li>
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            minhmn@viettel.com.vn
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Chương trình đào tạo nội bộ ISO/IEC 27001:2022 — Tổng Công ty Mạng lưới Viettel</p>
+                <p class="disclaimer">Tài liệu lưu hành nội bộ — Tuyệt đối không phân phối ra bên ngoài.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Sticky Navbar
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 80) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // 2. Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            mobileBtn.addEventListener('click', () => {
+                navbar.classList.toggle('menu-open');
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
+                link.addEventListener('click', () => {
+                    navbar.classList.remove('menu-open');
+                });
+            });
+
+            // 3. Accordion Logic (Curriculum & FAQ)
+            const accordions = document.querySelectorAll('.accordion-header');
+            accordions.forEach(acc => {
+                acc.addEventListener('click', function() {
+                    // Toggle current active class
+                    this.classList.toggle('active');
+                    
+                    // Toggle parent item active class (for FAQ borders)
+                    this.parentElement.classList.toggle('active');
+
+                    // Animate content height
+                    const content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            // 4. Form Validation & Simulation
+            const form = document.getElementById('training-form');
+            const successMsg = document.getElementById('form-success');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Form is validated by HTML5. If it reaches here, it's valid.
+                // Hide form and show success message
+                form.style.display = 'none';
+                successMsg.style.display = 'block';
+
+                // Optional: Code to actually POST to the Google Sheet App Script Webapp would go here.
+                /*
+                const formData = new FormData(form);
+                fetch('YOUR_GOOGLE_SCRIPT_WEBAPP_URL', { method: 'POST', body: formData })
+                  .then(response => console.log('Success!', response))
+                  .catch(error => console.error('Error!', error.message))
+                */
+            });
+
+            // 5. Scroll Animation Observer (Intersection Observer API)
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
